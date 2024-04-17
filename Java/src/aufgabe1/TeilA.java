@@ -1,5 +1,8 @@
 package aufgabe1;
 
+import edu.princeton.cs.algs4.*;
+
+import java.util.Arrays;
 
 public class TeilA {
 
@@ -11,30 +14,31 @@ public class TeilA {
         if (lo > hi) return null;
 
         int mid = lo + (hi + lo) / 2;
+        if(mid < radius) throw new IllegalArgumentException();
         boolean isLocalMax = true;
-        for (int j = mid-radius; j < mid+radius; j++) {
-            if (j < mid && ary[j] >= ary[j+1]) {
+        for (int j = 0; j < radius; j++) {
+            if (ary[mid-radius+j] >= ary[mid-radius+j+1] && radius<mid) {
                 isLocalMax = false;
                 break;
             }
-            if (j > mid && ary[j] <= ary[j+1]) {
+            if (ary[mid+j] <= ary[mid+j+1] && radius<hi) {
                 isLocalMax = false;
                 break;
             }
         }
         if (isLocalMax) {
-            return new int[] {Math.max(lo, mid - radius), Math.min(hi, mid + radius)};
+            return Arrays.copyOfRange(ary,mid-radius,mid+radius+1);
         } else if (ary[mid - 1] > ary[mid]) {
-            return findLocalMax(ary, radius, lo, mid - 1); // Linke Hälfte
+            return findLocalMax(ary, lo, mid, radius); // Linke Hälfte
         } else {
-            return findLocalMax(ary, radius, mid + 1, hi); // Rechte Hälfte
+            return findLocalMax(ary, mid, hi, radius); // Rechte Hälfte
         }
     }
     public static void main(String[] args) {
         int[] ary1 = {1, 61, 89, 75, 16, 33, 89, 59, 28, 3, 3, 97, 61, 85, 47, 38, 78, 7, 6, 15};
         int[] result = localMax(ary1, 2);
         if (result != null) {
-            System.out.println("Berechnet der Aufruf von localMax(ary,2): [" + result[0] + ", " + result[1] + "]");
+            System.out.println(Arrays.toString(result));
         } else {
             System.out.println("Kein lokales Maximum gefunden.");
         }

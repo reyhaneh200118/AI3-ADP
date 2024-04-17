@@ -1,5 +1,7 @@
 package aufgabe1;
 
+import edu.princeton.cs.algs4.StdOut;
+
 import java.util.Random;
 
 public class NumberGenerator {
@@ -15,10 +17,10 @@ public class NumberGenerator {
         for (int i = 0; i < n; i++) {
             if (i % 2 == 0) {
                 int intNum = rand.nextInt((max - min) + 1) + min;
-                System.out.printf("%d%s", intNum);
+                StdOut.println(intNum);
             } else {
                 double doubleNum = rand.nextDouble() * (max - min) + min;
-                System.out.printf("%d%s", doubleNum);
+                StdOut.println(doubleNum);
             }
         }
     }

@@ -1,27 +1,26 @@
 package aufgabe1;
 
-import com.sun.tools.javac.Main;
 import edu.princeton.cs.algs4.StdOut;
-
-import java.util.Random;
+import edu.princeton.cs.algs4.StdRandom;
 
 public class NumberGenerator {
+
     public static void main(String[] args) {
-        Random rand = new Random();
-        int n = Integer.parseInt(args[0]);
-        int min = Integer.parseInt(args[1]);
-        int max = Integer.parseInt(args[2]);
+        //args: 10 0 10
+        int N = Integer.parseInt(args[0]);
+        double min = Double.parseDouble(args[1]);
+        double max = Double.parseDouble(args[2]);
 
-        if (min >= max || n < 0 || ((long) max - min >= Integer.MAX_VALUE)) throw new IllegalArgumentException();
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < N; i++) {
             if (i % 2 == 0) {
-                int intNum = rand.nextInt((max - min) + 1) + min;
-                StdOut.println(intNum);
+                int x = StdRandom.uniformInt((int) min, (int) max); //Achtung: Intervall ist [min, max), nicht [min, max] wie gefordert
+                StdOut.print(x + " ");
             } else {
-                double doubleNum = rand.nextDouble() * (max - min) + min;
-                StdOut.println(doubleNum);
+                double x = StdRandom.uniformDouble(min, max);
+                StdOut.printf("%.2f ",x);
             }
         }
+        StdOut.println();
     }
+
 }

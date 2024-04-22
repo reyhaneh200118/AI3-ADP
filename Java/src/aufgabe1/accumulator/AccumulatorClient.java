@@ -21,4 +21,5 @@ public class AccumulatorClient {
         }
         StdOut.println(val);
     }
+
 }

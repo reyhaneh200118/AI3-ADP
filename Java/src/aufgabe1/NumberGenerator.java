@@ -1,17 +1,17 @@
 package aufgabe1;
 
+import com.sun.tools.javac.Main;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Random;
 
 public class NumberGenerator {
-    private Random rand;
+    public static void main(String[] args) {
+        Random rand = new Random();
+        int n = Integer.parseInt(args[0]);
+        int min = Integer.parseInt(args[1]);
+        int max = Integer.parseInt(args[2]);
 
-    public NumberGenerator(Random rand) {
-        this.rand = rand;
-    }
-
-    public void generateNumber(int n, int min, int max) {
         if (min >= max || n < 0 || ((long) max - min >= Integer.MAX_VALUE)) throw new IllegalArgumentException();
 
         for (int i = 0; i < n; i++) {
@@ -24,10 +24,4 @@ public class NumberGenerator {
             }
         }
     }
-
-    public static void main(String[] args) {
-        NumberGenerator numberGenerator = new NumberGenerator(new Random());
-        numberGenerator.generateNumber(10,0,100);
-    }
-
 }

@@ -3,8 +3,6 @@ package aufgabe1;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 
-import java.util.Random;
-
 public class NumberGenerator {
 
     public static void main(String[] args) {

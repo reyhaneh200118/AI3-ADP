@@ -48,32 +48,33 @@
 package aufgabe1;
 
 
-        import java.util.Arrays;
+import java.util.Arrays;
 
 public class TeilA {
 
-    public static int[] localMax(int[] ary,int radius) {
-        return findLocalMax(ary,0,ary.length,radius);
+    public static int[] localMax(int[] ary, int radius) {
+        return findLocalMax(ary, 0, ary.length, radius);
     }
 
-    private static int[]findLocalMax(int[] ary, int lo, int hi, int radius){
+    private static int[] findLocalMax(int[] ary, int lo, int hi, int radius) {
         if (lo < 0 || hi > ary.length || radius < 0) throw new IllegalArgumentException();
-        if (hi-lo == 1) return null;
+        if (hi - lo == 1) return null;
         int mid = lo + (hi - lo) / 2;
         boolean isLocalMax = true;
 
+        if (mid - radius < lo || mid + radius  >= hi) return null;
         for (int i = 0; i < radius; i++) {
-            if (mid-i-1 < 0 || mid+i+1 >= ary.length) return null;
-            if (ary[mid-i] <= ary[mid-i-1] || ary[mid+i] <= ary[mid+i+1]) {
+            if (ary[mid - i] <= ary[mid - i - 1] || ary[mid + i] <= ary[mid + i + 1]) {
                 isLocalMax = false;
                 break;
             }
         }
 
         if (isLocalMax) {
-            return Arrays.copyOfRange(ary,mid-radius,mid+radius+1);
+            return Arrays.copyOfRange(ary, mid - radius, mid + radius + 1);
         } else {
-            if(ary[mid-1] <= ary[mid+1]) hi = mid; else lo = mid;
+            if (ary[mid - 1] <= ary[mid + 1]) hi = mid;
+            else lo = mid;
             return findLocalMax(ary, lo, hi, radius);
         }
 
@@ -82,7 +83,7 @@ public class TeilA {
     public static void main(String[] args) {
         int[] ary1 = {1, 61, 89, 75, 16, 33, 89, 59, 28, 3, 3, 97, 61, 85, 47, 38, 78, 7, 6, 15};
         int[] ary2 = {1, 61, 16, 75, 89, 133, 89, 59, 28, 3, 3, 97, 61, 85, 47, 38, 78, 7, 6, 15};
-        int[] ary3 = {99,1, 61, 89, 75, 16, 33, 89, 59, 28, 3, 3, 97, 61, 85, 47, 38, 78, 7, 6, 15};
+        int[] ary3 = {99, 1, 61, 89, 75, 16, 33, 89, 59, 28, 3, 3, 97, 61, 85, 47, 38, 78, 7, 6, 15};
         int[] result;
 
         //ary1

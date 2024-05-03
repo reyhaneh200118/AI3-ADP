@@ -5,11 +5,10 @@ import edu.princeton.cs.algs4.*;
 
 public class NPlusEvenFilter {
     public static void main(String[] args) {
-        while (StdIn.hasNextLine()) {
-            double[] inputIntegers = StdIn.readAllDoubles();
-            for (double i : inputIntegers)
-            if ( i % 2 == 0) {
-               StdOut.println(i);
+        while (!StdIn.isEmpty()) {
+            double inputDouble = StdIn.readDouble();
+            if ( inputDouble % 2 == 0 && inputDouble >= 0) {
+               StdOut.println(inputDouble);
             }
         }
 

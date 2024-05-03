@@ -12,7 +12,7 @@ public class NumberGenerator {
         double max = Double.parseDouble(args[2]);
 
         for (int i = 0; i < N; i++) {
-            if (i % 2 == 0) {
+            if (Math.random() < 0.5) {
                 int x = StdRandom.uniformInt((int) min, (int) max); //Achtung: Intervall ist [min, max), nicht [min, max] wie gefordert
                 StdOut.print(x + " ");
             } else {

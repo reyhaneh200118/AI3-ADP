@@ -1,7 +1,5 @@
 package aufgabe1.accumulator;
 
-import aufgabe1.accumulator.Accumulator;
-import aufgabe1.accumulator.SimpleAccumulator;
 import edu.princeton.cs.algs4.StdDraw;
 
 import java.awt.*;

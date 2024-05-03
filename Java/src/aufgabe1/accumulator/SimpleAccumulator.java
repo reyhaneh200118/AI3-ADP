@@ -1,8 +1,6 @@
 package aufgabe1.accumulator;
 
 
-import aufgabe1.accumulator.Accumulator;
-
 public class SimpleAccumulator implements Accumulator {
     private int N=0;
     private double total=0.0;

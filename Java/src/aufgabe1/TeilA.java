@@ -57,9 +57,12 @@ public class TeilA {
     }
 
     private static int[] findLocalMax(int[] ary, int lo, int hi, int radius) {
+        //Pre-Conditions
         if (lo < 0 || hi > ary.length || radius < 0) throw new IllegalArgumentException();
         if (hi - lo == 1) return null;
-        int mid = lo + (hi - lo) / 2;
+
+        int mid = lo + (hi - lo) / 2;   //Mitte bestimmen
+
         boolean isLocalMax = true;
 
         if (mid - radius < lo || mid + radius  >= hi) return null;
@@ -72,10 +75,10 @@ public class TeilA {
 
         if (isLocalMax) {
             return Arrays.copyOfRange(ary, mid - radius, mid + radius + 1);
+        } else if (ary[mid-1] <= ary[mid+1]) {
+            return findLocalMax(ary, lo, mid, radius);  //in linker Hälfte weitersuchen
         } else {
-            if (ary[mid - 1] <= ary[mid + 1]) hi = mid;
-            else lo = mid;
-            return findLocalMax(ary, lo, hi, radius);
+            return findLocalMax(ary, mid, hi, radius);  //in rechter Hälfte weitersuchen
         }
 
     }

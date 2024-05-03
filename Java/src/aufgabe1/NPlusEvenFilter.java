@@ -1,17 +1,20 @@
 package aufgabe1;
 
-
-import edu.princeton.cs.algs4.*;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
 
 public class NPlusEvenFilter {
     public static void main(String[] args) {
         while (!StdIn.isEmpty()) {
-            double inputDouble = StdIn.readDouble();
-            if ( inputDouble % 2 == 0 && inputDouble >= 0) {
-               StdOut.println(inputDouble);
+            double num = StdIn.readDouble();
+            if (isPositiveEven(num)) {
+                StdOut.println(num);
             }
         }
-
     }
 
+    private static boolean isPositiveEven(double num) {
+        return num >= 0.0 && num % 2 == 0;
+    }
 }

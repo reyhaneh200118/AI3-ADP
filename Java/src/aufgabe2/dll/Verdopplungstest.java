@@ -1,4 +1,4 @@
-package aufgabe2;
+package aufgabe2.dll;
 
 import edu.princeton.cs.algs4.*;
 

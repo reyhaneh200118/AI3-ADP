@@ -1,4 +1,4 @@
-package aufgabe2;
+package aufgabe2.dll;
 
 import java.util.*;
 

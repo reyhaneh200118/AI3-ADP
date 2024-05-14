@@ -60,6 +60,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
 
     @Override
     public T remove(int index) {
+        if (size == 0) throw new NoSuchElementException("List is empty.");
         checkIndex(index);
         Node current = head.next;
         for (int i = 0; i < index; i++) {
@@ -90,19 +91,100 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         }
     }
 
+    @Override
+    public ListIterator<T> listIterator() {
+        return new DllIterator();
+
+    }
+
+    private class DllIterator implements ListIterator<T> {
+        private Node lastReturned = null;
+        private Node current = head;
+        private int cursor = 0;
+
+        @Override
+        public boolean hasNext() {
+            return cursor < size;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            lastReturned = current;
+            current = current.next;
+            cursor++;
+            return lastReturned.t;
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return cursor > 0;
+        }
+
+        @Override
+        public T previous() {
+            if (!hasPrevious()) throw new NoSuchElementException();
+            lastReturned = current;
+            current = current.prev;
+            cursor--;
+            return lastReturned.t;
+        }
+
+        @Override
+        public int nextIndex() {
+            return cursor;
+        }
+
+        @Override
+        public int previousIndex() {
+            return cursor - 1;
+        }
+
+        @Override
+        public void remove() {
+            if (lastReturned == null) throw new IllegalStateException();
+            Node lastNext = lastReturned.next;
+            lastReturned.prev.next = lastNext;
+            lastNext.prev = lastReturned.prev;
+            size--;
+            cursor--;
+            lastReturned = null;
+        }
+
+        @Override
+        public void set(T t) {
+            if (lastReturned == null) throw new IllegalStateException();
+            lastReturned.t = t;
+        }
+
+        @Override
+        public void add(T t) {
+            Node newNode = new Node();
+            newNode.t = t;
+            newNode.next = current;
+            newNode.prev = current.prev;
+            current.prev.next = newNode;
+            current.prev = newNode;
+            size++;
+            cursor++;
+            lastReturned = null;
+        }
+    }
+
+
     public static void main(String[] args) {
         DoublyLinkedList<String> list = new DoublyLinkedList<>();
 
         // am Ende der Liste
         list.add("second");
-        list.add(1,"last");
+        list.add(1, "last");
         // am Anfang der Liste
         list.add(0, "first");
         // in der Mitte der Liste
         list.add(2, "something");
         list.add(2, "something");
         list.add(2, "something");
-        list.add(list.size()/2, "middle");
+        list.add(list.size() / 2, "middle");
         System.out.println(list);
 
         // b.
@@ -111,21 +193,23 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
 
         // c.
         list.remove(0);
-        list.remove(list.size()-1);
-        list.remove(list.size()/2);
+        list.remove(list.size() - 1);
+        list.remove(list.size() / 2);
         System.out.println(list);
 
         // e. -> wird hier explizit nach Iterator gefragt?
         for (String s : list) {
             System.out.println(s);
         }
+//        while (list.iterator().hasNext()) {
+//            System.out.println(list.iterator().next());
+//        }
 
-        // f.
+        // f. -> kann it .forEach() vereinfacht werden (seit Java 19)
         list.stream().forEach(System.out::println);
 
         // g.
-        String[] array = list.toArray(new String[0]);
-        System.out.println(Arrays.toString(array));
+        System.out.println(Arrays.toString(list.toArray()));
 
         // d.
         list.clear();
@@ -147,9 +231,6 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
 
         DoublyLinkedList<String> list3 = new DoublyLinkedList<>(arrayList);
         System.out.println(list3);
-
-
-
     }
 
 }

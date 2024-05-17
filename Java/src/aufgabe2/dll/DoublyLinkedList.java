@@ -26,7 +26,6 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         this.addAll(collection);
     }
 
-    //TODO: N/2 Performance korrigieren
     @Override
     public T get(int index) {
         checkIndex(index, size - 1);

@@ -21,18 +21,16 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         size = 0;
     }
 
-    public DoublyLinkedList(Collection<T> collection) {
+    public DoublyLinkedList(Collection<? extends T> collection) {
         this();
         this.addAll(collection);
     }
 
+    //TODO: N/2 Performance korrigieren
     @Override
     public T get(int index) {
-        checkIndex(index);
-        Node current = head.next;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-        }
+        checkIndex(index, size - 1);
+        Node current = getNode(index);
         return current.t;
     }
 
@@ -44,62 +42,69 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
     @Override
     public void add(int index, T t) {
         if (t == null) throw new NullPointerException();
-        checkIndex(index);
+        checkIndex(index, size);
         Node newNode = new Node();
         newNode.t = t;
-        Node current = head;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-        }
-        newNode.next = current.next;
-        newNode.prev = current;
-        current.next.prev = newNode;
-        current.next = newNode;
+        Node current = getNode(index); // hier nicht richtig -> falsches Verhalten
+        newNode.next = current;
+        newNode.prev = current.prev;
+        current.prev.next = newNode;
+        current.prev = newNode;
         size++;
     }
 
     @Override
     public T remove(int index) {
         if (size == 0) throw new NoSuchElementException("List is empty.");
-        checkIndex(index);
-        Node current = head.next;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-        }
+        checkIndex(index, size - 1);
+        Node current = getNode(index);
         current.prev.next = current.next;
         current.next.prev = current.prev;
         size--;
         return current.t;
     }
 
+    private Node getNode(int index) {
+        Node current;
+        if (index > size / 2) {
+            current = tail.prev;
+            for (int i = size - 1; i > index; i--) {
+                current = current.prev;
+            }
+        } else {
+            current = head.next;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+        }
+
+        return current;
+    }
+
     @Override
     public T set(int index, T t) {
         if (t == null) throw new NullPointerException();
-        checkIndex(index);
-        Node current = head.next;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-        }
+        checkIndex(index, size - 1);
+        Node current = getNode(index);
         T old = current.t;
         current.t = t;
         return old;
     }
 
-    private void checkIndex(int index) {
-        if (index < 0 || index > size) {
+    private void checkIndex(int index, int max) {
+        if (index < 0 || index > max) {
             throw new IndexOutOfBoundsException();
         }
     }
 
     @Override
-    public ListIterator<T> listIterator() {
+    public Iterator<T> iterator() {
         return new DllIterator();
-
     }
 
-    private class DllIterator implements ListIterator<T> {
+    private class DllIterator implements Iterator<T> {
         private Node lastReturned = null;
-        private Node current = head;
+        private Node current = head.next;
         private int cursor = 0;
 
         @Override
@@ -115,66 +120,14 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
             cursor++;
             return lastReturned.t;
         }
-
-        @Override
-        public boolean hasPrevious() {
-            return cursor > 0;
-        }
-
-        @Override
-        public T previous() {
-            if (!hasPrevious()) throw new NoSuchElementException();
-            lastReturned = current;
-            current = current.prev;
-            cursor--;
-            return lastReturned.t;
-        }
-
-        @Override
-        public int nextIndex() {
-            return cursor;
-        }
-
-        @Override
-        public int previousIndex() {
-            return cursor - 1;
-        }
-
-        @Override
-        public void remove() {
-            if (lastReturned == null) throw new IllegalStateException();
-            Node lastNext = lastReturned.next;
-            lastReturned.prev.next = lastNext;
-            lastNext.prev = lastReturned.prev;
-            size--;
-            cursor--;
-            lastReturned = null;
-        }
-
-        @Override
-        public void set(T t) {
-            if (lastReturned == null) throw new IllegalStateException();
-            lastReturned.t = t;
-        }
-
-        @Override
-        public void add(T t) {
-            Node newNode = new Node();
-            newNode.t = t;
-            newNode.next = current;
-            newNode.prev = current.prev;
-            current.prev.next = newNode;
-            current.prev = newNode;
-            size++;
-            cursor++;
-            lastReturned = null;
-        }
     }
 
 
     public static void main(String[] args) {
         DoublyLinkedList<String> list = new DoublyLinkedList<>();
 
+        list.add("hi");
+        System.out.println(list);
         // am Ende der Liste
         list.add("second");
         list.add(1, "last");

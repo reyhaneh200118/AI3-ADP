@@ -9,8 +9,8 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         Node next;
     }
 
-    private Node head;
-    private Node tail;
+    private final Node head;
+    private final Node tail;
     private int size;
 
     public DoublyLinkedList() {
@@ -44,7 +44,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         checkIndex(index, size);
         Node newNode = new Node();
         newNode.t = t;
-        Node current = getNode(index); // hier nicht richtig -> falsches Verhalten
+        Node current = getNode(index);
         newNode.next = current;
         newNode.prev = current.prev;
         current.prev.next = newNode;
@@ -61,6 +61,16 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         current.next.prev = current.prev;
         size--;
         return current.t;
+    }
+
+    @Override
+    public T set(int index, T t) {
+        if (t == null) throw new NullPointerException();
+        checkIndex(index, size - 1);
+        Node current = getNode(index);
+        T old = current.t;
+        current.t = t;
+        return old;
     }
 
     private Node getNode(int index) {
@@ -80,16 +90,6 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         return current;
     }
 
-    @Override
-    public T set(int index, T t) {
-        if (t == null) throw new NullPointerException();
-        checkIndex(index, size - 1);
-        Node current = getNode(index);
-        T old = current.t;
-        current.t = t;
-        return old;
-    }
-
     private void checkIndex(int index, int max) {
         if (index < 0 || index > max) {
             throw new IndexOutOfBoundsException();
@@ -102,7 +102,6 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
     }
 
     private class DllIterator implements Iterator<T> {
-        private Node lastReturned = null;
         private Node current = head.next;
         private int cursor = 0;
 
@@ -114,7 +113,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
         @Override
         public T next() {
             if (!hasNext()) throw new NoSuchElementException();
-            lastReturned = current;
+            Node lastReturned = current;
             current = current.next;
             cursor++;
             return lastReturned.t;
@@ -125,8 +124,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
     public static void main(String[] args) {
         DoublyLinkedList<String> list = new DoublyLinkedList<>();
 
-        list.add("hi");
-        System.out.println(list);
+        // a.
         // am Ende der Liste
         list.add("second");
         list.add(1, "last");
@@ -158,7 +156,7 @@ public class DoublyLinkedList<T> extends AbstractList<T> {
 //        }
 
         // f. -> kann it .forEach() vereinfacht werden (seit Java 19)
-        list.stream().forEach(System.out::println);
+        list.forEach(System.out::println);
 
         // g.
         System.out.println(Arrays.toString(list.toArray()));

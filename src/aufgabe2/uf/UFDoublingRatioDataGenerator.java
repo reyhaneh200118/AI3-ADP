@@ -19,6 +19,8 @@ public class UFDoublingRatioDataGenerator {
 
     public static String filename(int n){
         return System.getProperty("user.dir") +
+                File.separator + "resources" +
+                File.separator + "ufrdData" +
                 File.separator+PREFIX+n+"."+EXT;
     }
 

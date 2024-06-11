@@ -42,7 +42,7 @@ public class SortCompare {
             StdOut.printf("Sort of %s done in %.5f ms\n", alg1, t1);
             double t2 = time(alg2, data.clone());
             StdOut.printf("Sort of %s done in %.5f ms\n", alg2, t2);
-            StdOut.printf("For %d random Doubles %s is %1.1f times faster than %s\n", length, alg1, t2 / t1, alg2);
+            StdOut.printf("For %d random Doubles %s is %1.5f times faster than %s\n", length, alg1, t2 / t1, alg2);
         }
     }
 }

@@ -18,45 +18,44 @@ public class Quick7Median {
     }
 
 
-    public static  <T extends Comparable<? super T>> int findMedianIndexOf7(T[] array, int i, int j, int k, int l, int m, int n, int o) {
+    public static <T extends Comparable<? super T>> int findMedianIndexOf7(T[] array, int i, int j, int k, int l, int m, int n, int o) {
         Integer[] indices = {i, j, k, l, m, n, o};
-        Arrays.sort(indices, new Comparator<Integer>() {
-            @Override
-            public int compare(Integer index1, Integer index2) {
-                return array[index1].compareTo(array[index2]);
-            }
-        });
+        Arrays.sort(indices, Comparator.comparing(index -> array[index]));
         return indices[3];
     }
-    public static <T extends Comparable<? super T>>  void sort(T[] a) {
+
+    public static <T extends Comparable<? super T>> void sort(T[] a) {
         StdRandom.shuffle(a);
-        sort( a,0, a.length - 1);
+        sort(a, 0, a.length - 1);
         assert isSorted(a);
     }
 
     private static <T extends Comparable<? super T>> void sort(T[] a, int lo, int hi) {
         if (hi <= lo) return;
-        int median = findMedianIndexOf7(a, lo,lo+1,lo+2, lo + (hi - lo) / 2,hi-2,hi-1, hi);
-        swap(a,lo,median);
-        int pivot = partition( a, lo, hi);
+        int median = 0;
+        if (hi - lo + 1 >= 7)
+            median = findMedianIndexOf7(a, lo, lo + 1, lo + 2, lo + (hi - lo) / 2, hi - 2, hi - 1, hi);
+
+        exch(a, lo, median);
+        int pivot = partition(a, lo, hi);
         sort(a, lo, pivot - 1);
-        sort(a,pivot + 1, hi);
+        sort(a, pivot + 1, hi);
     }
 
-    public static <T extends Comparable<? super T>> int partition(T[] a, int lo, int hi){
-        int i=lo, j=hi+1;
+    public static <T extends Comparable<? super T>> int partition(T[] a, int lo, int hi) {
+        int i = lo, j = hi + 1;
         T pivot = a[lo];
-        while( true ) {
-            while(less(a[++i],pivot)) {
-                if (i==hi) break;
+        while (true) {
+            while (less(a[++i], pivot)) {
+                if (i == hi) break;
             }
-            while(less(pivot,a[--j])) {
-                if (j==lo) break;
+            while (less(pivot, a[--j])) {
+                if (j == lo) break;
             }
             if (i >= j) break;
-            exch(a,i,j);
+            exch(a, i, j);
         }
-        exch(a,lo,j);
+        exch(a, lo, j);
         return j;
     }
 

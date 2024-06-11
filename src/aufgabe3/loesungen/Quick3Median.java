@@ -1,4 +1,7 @@
-package aufgabe3.ad_2_3;
+package aufgabe3.loesungen;
+
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Arrays;
 import java.util.Comparator;

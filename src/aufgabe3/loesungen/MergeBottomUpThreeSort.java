@@ -1,4 +1,4 @@
-package aufgabe3;
+package aufgabe3.loesungen;
 
 import static aufgabe3.ad_2.SortClassCommons.*;
 

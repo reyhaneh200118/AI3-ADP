@@ -1,4 +1,4 @@
-package aufgabe3;
+package aufgabe3.loesungen;
 
 import aufgabe3.ad_2_4.MaxPQ;
 import edu.princeton.cs.algs4.Stack;

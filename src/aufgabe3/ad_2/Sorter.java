@@ -5,11 +5,10 @@ import aufgabe3.ad_2_1.Selection;
 import aufgabe3.ad_2_1.Shell;
 import aufgabe3.ad_2_2.Merge;
 import aufgabe3.ad_2_2.MergeBottomUp;
-import aufgabe3.ad_2_3.Quick;
-import aufgabe3.ad_2_3.Quick3Way;
-import aufgabe3.ad_2_3.Quick3WayPlusInsertion;
-import aufgabe3.ad_2_3.QuickPlusInsertion;
+import aufgabe3.ad_2_3.*;
 import aufgabe3.ad_2_4.HeapSort;
+import aufgabe3.loesungen.Quick3Median;
+import aufgabe3.loesungen.Quick7Median;
 
 public enum Sorter {
     SELECTION {
@@ -51,6 +50,16 @@ public enum Sorter {
         @Override
         public Class<?> getSorterClass() {
             return Quick3WayPlusInsertion.class;
+        }
+    },QUICK3MEDIAN {
+        @Override
+        public Class<?> getSorterClass() {
+            return Quick3Median.class;
+        }
+    },QUICK7MEDIAN {
+        @Override
+        public Class<?> getSorterClass() {
+            return Quick7Median.class;
         }
     }, HEAP {
         @Override

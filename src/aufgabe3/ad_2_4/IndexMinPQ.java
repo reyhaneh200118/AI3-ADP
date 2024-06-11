@@ -108,9 +108,11 @@ public class IndexMinPQ<Key extends Comparable<Key>> {
         for (int i=1; i<= N;i++) {
             keyHeap[i] = String.format("%d:%s",pq[i],keys[pq[i]]);
         }
+        StdOut.println(title);
         StdOut.println(Arrays.toString(keyHeap));
         StdOut.println(Arrays.toString(keys));
         StdOut.println(Arrays.toString(pq));
+        StdOut.println();
     }
 
     public static void main(String[] args) {
